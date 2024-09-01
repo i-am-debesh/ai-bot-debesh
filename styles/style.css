@@ -1,0 +1,79 @@
+body {
+    background-color: rgb(9, 9, 35);
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  .input-box {
+    height: 30px;
+    min-width: 200px;
+    border-radius: 3px;
+    padding: 5px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.225);
+    color: white;
+    border: none;
+  }
+  .submit-btn {
+    margin-top: 20px;
+    margin-left: 10px;
+    border: none;
+    height: 30px;
+    width: 90px;
+    background-color: rgb(16, 168, 105);
+    border-radius: 2px;
+    font-weight: bold;
+    cursor: pointer;
+  
+  }
+  
+  .response-box {
+    width: fit-content;
+    height: fit-content;
+    
+    padding: 30px;
+    
+    color: rgb(255, 255, 255);
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .response-box-style{
+    background-color: rgba(240, 248, 255, 0.036);
+  }
+  
+  
+  /* LOADER */
+  .loader {
+    width: 100px;
+    height: 40px;
+    --g: radial-gradient(farthest-side,#0000 calc(95% - 3px),#fff calc(100% - 3px) 98%,#0000 101%) no-repeat;
+    background: var(--g), var(--g), var(--g);
+    background-size: 30px 30px;
+    animation: l9 1s infinite alternate;
+  }
+  @keyframes l9 {
+    0% {
+      background-position: 0 50%, 50% 50%, 100% 50%;
+    }
+    20% {
+      background-position: 0 0, 50% 50%, 100% 50%;
+    }
+    40% {
+      background-position: 0 100%, 50% 0, 100% 50%;
+    }
+    60% {
+      background-position: 0 50%, 50% 100%, 100% 0;
+    }
+    80% {
+      background-position: 0 50%, 50% 50%, 100% 100%;
+    }
+    100% {
+      background-position: 0 50%, 50% 50%, 100% 50%;
+    }
+  }
