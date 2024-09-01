@@ -25,7 +25,8 @@ async function getResponse(question) {
       
       
     } catch (error) {
-      console.error(error.message);
+        return error.message === 'Failed to fetch'? 'failed to connect..check your internet connection.':error.message;
+    //   console.error(error.message);
     }
 }
 
@@ -68,5 +69,5 @@ submitBtn.addEventListener('click', async()=>{
     const res = await getResponse(question);
     await loadAnimation(res);
     
-    console.log(res)
+    //console.log(res)
 })
