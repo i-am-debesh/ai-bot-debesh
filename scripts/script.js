@@ -25,8 +25,9 @@ async function getResponse(question) {
       
       
     } catch (error) {
-        return error.message === 'Failed to fetch'? 'failed to connect..check your internet connection.':error.message;
-    //   console.error(error.message);
+        console.error(error.message);
+        return error.message === 'Failed to fetch'? 'failed to connect..check your internet connection.':'Sorry!<br> No answer available regarding your question';
+        
     }
 }
 
