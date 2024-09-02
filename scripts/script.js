@@ -52,22 +52,31 @@ function printWordByWord(text, delay, elementId) {
   
 //   const text = "Hello, this is an example of printing word by word!";
 //   const delay = 500;
-//   const elementId = 'output';
-  
+//   const elementId = 'output';  
 
-  
-  
+let onGoing = false;
 
 
 submitBtn.addEventListener('click', async()=>{
-    loadAnimation();
-    responseField.innerHTML = '';
-    const question = inputBox.value;
-    const res = await getResponse(question); 
-    responseField.classList.remove('loader')
-    responseField.classList.add('response-box-style')   
-    printWordByWord(res,100,'response-box')
-    
+
+  if(onGoing === false) {
+      onGoing = true;
+      loadAnimation();
+      submitBtn.classList.add('disable-btn');
+      responseField.innerHTML = '';
+      const question = inputBox.value;
+      const res = await getResponse(question); 
+      const totalDelay = res.length;
+
+      responseField.classList.remove('loader')
+      responseField.classList.add('response-box-style')   
+      printWordByWord(res,100,'response-box')
+      setTimeout(()=>{
+        submitBtn.classList.remove('disable-btn');
+        onGoing = false;
+      },totalDelay*20)
+      
+  }
     
     //console.log(res)
 })

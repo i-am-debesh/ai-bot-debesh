@@ -29,6 +29,17 @@ body {
     cursor: pointer;
   
   }
+  .disable-btn {
+    margin-top: 20px;
+    margin-left: 10px;
+    border: none;
+    height: 30px;
+    width: 90px;
+    background-color: rgba(16, 168, 105, 0.122);
+    border-radius: 2px;
+    font-weight: bold;
+    cursor:not-allowed;
+  }
   
   .response-box {
     width: fit-content;
