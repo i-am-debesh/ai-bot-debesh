@@ -31,13 +31,8 @@ async function getResponse(question) {
     }
 }
 
-async function loadAnimation(res) {
+async function loadAnimation() {
     responseField.classList.add('loader');
-    setTimeout(()=>{
-        responseField.classList.remove('loader')
-        responseField.classList.add('response-box-style')
-        printWordByWord(res,100,'response-box');
-    },3000)
 }
 
 function printWordByWord(text, delay, elementId) {
@@ -65,10 +60,14 @@ function printWordByWord(text, delay, elementId) {
 
 
 submitBtn.addEventListener('click', async()=>{
+    loadAnimation();
     responseField.innerHTML = '';
     const question = inputBox.value;
-    const res = await getResponse(question);
-    await loadAnimation(res);
+    const res = await getResponse(question); 
+    responseField.classList.remove('loader')
+    responseField.classList.add('response-box-style')   
+    printWordByWord(res,100,'response-box')
+    
     
     //console.log(res)
 })
