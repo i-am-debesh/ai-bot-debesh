@@ -43,7 +43,7 @@ body {
   
   .response-box {
     width: fit-content;
-    height: fit-content;
+    max-height:470px;
     
     padding: 30px;
     
@@ -56,6 +56,10 @@ body {
   
   .response-box-style{
     background-color: rgba(240, 248, 255, 0.036);
+    border-radius: 5px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(62, 52, 83, 0.686) rgba(0, 0, 0, 0);
   }
   
   

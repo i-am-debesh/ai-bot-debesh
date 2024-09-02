@@ -58,7 +58,10 @@ let onGoing = false;
 
 
 submitBtn.addEventListener('click', async()=>{
-
+  
+  if(responseField.classList.contains('response-box-style')) {
+    responseField.classList.remove('response-box-style') 
+  }
   if(onGoing === false) {
       onGoing = true;
       loadAnimation();
