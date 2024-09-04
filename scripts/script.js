@@ -8,7 +8,7 @@ const apiUrl = 'https://ai-model-debesh.onrender.com/question=';
 
 
 function createQuestion(question) {
-    return `${apiUrl}/${question}`;
+    return `${apiUrl+question}`;
 }
 
 async function getResponse(question) {
