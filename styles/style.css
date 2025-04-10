@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: rgb(9, 9, 35);
     color: white;
     text-align: center;
@@ -7,16 +7,7 @@ body {
     align-items: center;
     
   }
-  .input-box {
-    height: 30px;
-    min-width: 200px;
-    border-radius: 3px;
-    padding: 5px;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.225);
-    color: white;
-    border: none;
-  }
+   */
   .submit-btn {
     margin-top: 20px;
     margin-left: 10px;
@@ -30,15 +21,7 @@ body {
   
   }
   .disable-btn {
-    margin-top: 20px;
-    margin-left: 10px;
-    border: none;
-    height: 30px;
-    width: 90px;
-    background-color: rgba(16, 168, 105, 0.122);
-    border-radius: 2px;
-    font-weight: bold;
-    cursor:not-allowed;
+    opacity: 20%;
   }
   
   .response-box {
