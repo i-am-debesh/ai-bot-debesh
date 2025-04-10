@@ -2,7 +2,7 @@ const responseField = document.querySelector('.response-box');
 const inputBox = document.querySelector('.input-box');
 const submitBtn = document.querySelector('.send-btn');
 const micElement = document.querySelector('.mic-btn');
-
+const headingElement = document.querySelector('.heading')
 const apiUrl = 'https://ai-model-debesh.onrender.com/question=';
 
 function createQuestion(question) {
@@ -29,26 +29,87 @@ async function getResponse(question) {
     }
 }
 
-async function loadAnimation() {
-    responseField.classList.add('loader');
-}
-
-function printWordByWord(text, delay, elementId) {
-    const words = text.split(' ');
-    let index = 0;   
+function addLoader() {
     
-    function printNextWord() {
-      if (index < words.length) {
-        elementId.innerHTML += words[index] + ' '; // Add the word to the HTML element
-        index++;
-        setTimeout(printNextWord, delay);
-      }
-    }
-    printNextWord();
-
-
+  const loader = 
+  `<div class="loader"></div>`;
+  responseField.innerHTML += loader;
 }
+async function removeLoader() {
+  document.querySelector('.loader').remove();
+}
+
+function scrollToBottom() {
   
+    window.scrollTo({
+      top: responseField.scrollHeight,
+      behavior: 'smooth'
+  });
+}
+
+// function printWordByWord(text, delay, elementId) {
+//     const words = text.split(' ');
+//     let index = 0;   
+    
+//     function printNextWord() {
+//       if (index < words.length) {
+//         elementId.innerHTML += words[index] + ' '; // Add the word to the HTML element
+//         index++;
+//         setTimeout(printNextWord, delay);
+//       }
+//     }
+//     printNextWord();
+
+
+// }
+async function delay(timeInMiliseconds) {
+  setTimeout(()=>{
+
+  },timeInMiliseconds)
+}
+async function submitRequest(input,type) {
+
+  if(input !== '') {
+
+    
+    const userMsgElement = 
+    `<div class="msg user-msg">
+      <p class="who-user">You</p>
+      ${input}
+    </div>`;    
+    responseField.innerHTML += userMsgElement;
+    
+    const question = input;
+    inputBox.value = '';
+    addLoader();
+    let res = '';
+    if(type !== 'e') {
+      res = await getResponse(question);
+    }
+    //console.log(res);
+    delay(2000);
+    removeLoader();
+    
+    if(type === 'e') {
+      res = input;
+    }
+    const botMsgElement = 
+    `<div class="msg bot-msg">
+      <p class="who-bot">Curious</p>
+      ${res}
+    </div>`;
+    if(type === 'v') {
+      const botVoice = speechSynthesis.getVoices()[4];    
+      const utterance = new SpeechSynthesisUtterance(res);  
+      utterance.voice = botVoice;
+      speechSynthesis.speak(utterance);
+    }
+    responseField.innerHTML += botMsgElement;
+    scrollToBottom();
+        
+  }
+}
+
 //   const text = "Hello, this is an example of printing word by word!";
 //   const delay = 500;
 //   const elementId = 'output';  
@@ -56,28 +117,8 @@ function printWordByWord(text, delay, elementId) {
 let onGoing = false;
 
 submitBtn.addEventListener('click', async()=>{
-  if(responseField.classList.contains('response-box-style')) {
-    responseField.classList.remove('response-box-style') 
-  }
-  if(onGoing === false) {
-      onGoing = true;
-      loadAnimation();
-      submitBtn.classList.add('disable-btn');
-      responseField.innerHTML = '';
-      const question = inputBox.value;
-      inputBox.value = '';
-      const res = await getResponse(question); 
-      const totalDelay = res.length;
 
-      responseField.classList.remove('loader')
-      responseField.classList.add('response-box-style')  
-      printWordByWord(res,100,responseField)
-      setTimeout(()=>{
-        submitBtn.classList.remove('disable-btn');
-        onGoing = false;
-      },totalDelay*20)
-      
-  }
+    submitRequest(inputBox.value,'t');
     
     //console.log(res)
 })
@@ -101,21 +142,15 @@ async function startRecognition() {
 
   recognition.onresult = async (event) => {
     const transcript = event.results[0][0].transcript;
-    const speechRes = await getResponse(transcript)
-    console.log(speechRes);
-    
-    // Speak it back
-    const botVoice = speechSynthesis.getVoices()[4];
-    
-    const utterance = new SpeechSynthesisUtterance(speechRes);  
-    utterance.voice = botVoice;
-    speechSynthesis.speak(utterance);
-    responseField.innerHTML = '';
-    printWordByWord(speechRes,100,responseField);
+    // const speechRes = await getResponse(transcript)
+    // console.log(speechRes);
+    submitRequest(transcript,'v');    
+    // Speak it back    
   };
 
   recognition.onerror = (event) => {
-    responseField.innerHTML = 'Error: ' + event.error;
+    const errorText = 'Error: ' + event.error;
+    submitRequest(errorText,'e');
   };
 }
 window.speechSynthesis.onvoiceschanged = () => {
