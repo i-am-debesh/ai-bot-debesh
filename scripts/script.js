@@ -67,6 +67,22 @@ async function delay(timeInMiliseconds) {
 
   },timeInMiliseconds)
 }
+function removeAsterisks(text) {
+  return text.replace(/\*/g, '');
+}
+
+function formatText(text) {
+  // Convert **bold** to <strong>bold</strong>
+  let formatted = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Replace single asterisks (not part of double) with <br>
+  formatted = formatted.replace(/(^|[^*])\*(?!\*)([^*]|$)/g, (_, before, after) => {
+    return `${before}<br>${after}`;
+  });
+
+  return formatted;
+}
+
 async function submitRequest(input,type) {
 
   if(input !== '') {
@@ -83,8 +99,12 @@ async function submitRequest(input,type) {
     inputBox.value = '';
     addLoader();
     let res = '';
+    let botScript = '';
+    let formattedResponse = '';
     if(type !== 'e') {
       res = await getResponse(question);
+      botScript = removeAsterisks(res);
+      formattedResponse = formatText(res);
     }
     //console.log(res);
     delay(2000);
@@ -96,11 +116,11 @@ async function submitRequest(input,type) {
     const botMsgElement = 
     `<div class="msg bot-msg">
       <p class="who-bot">Curious</p>
-      ${res}
+      ${formattedResponse}
     </div>`;
     if(type === 'v') {
       const botVoice = speechSynthesis.getVoices()[4];    
-      const utterance = new SpeechSynthesisUtterance(res);  
+      const utterance = new SpeechSynthesisUtterance(botScript);  
       utterance.voice = botVoice;
       speechSynthesis.speak(utterance);
     }
