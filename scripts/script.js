@@ -4,11 +4,14 @@ const submitBtn = document.querySelector('.send-btn');
 const micElement = document.querySelector('.mic-btn');
 const headingElement = document.querySelector('.heading')
 const apiUrl = 'https://ai-model-debesh.onrender.com/question=';
-
+const listeningTextElement = document.querySelector('.listening-text');
 function createQuestion(question) {
     return `${apiUrl+question}`;
 }
-
+function AwakeCurious() {
+  submitRequest('Awake','a');
+}
+//AwakeCurious();
 inputBox.addEventListener("keydown",(event)=>{
   if(event.key === "Enter" && !event.shiftkey) {
     event.preventDefault();
@@ -36,11 +39,13 @@ async function getResponse(question) {
     }
 }
 
-function addLoader() {
-    
-  const loader = 
-  `<div class="loader"></div>`;
-  responseField.innerHTML += loader;
+function addLoader(value) {
+  if(value ===1) {
+    const loader = 
+    `<div class="loader"></div>`;
+    responseField.innerHTML += loader;
+  }
+  
 }
 async function removeLoader() {
   document.querySelector('.loader').remove();
@@ -97,12 +102,15 @@ async function submitRequest(input,type) {
     `<div class="msg user-msg">
       <p class="who-user">You</p>
       ${input}
-    </div>`;    
-    responseField.innerHTML += userMsgElement;
+    </div>`;
+    if(type !== 'a') {
+      responseField.innerHTML += userMsgElement;
+
+    }
     
     const question = input;
     inputBox.value = '';
-    addLoader();
+    type !== 'a'?addLoader(1):addLoader(0);
     let res = '';
     let botScript = '';
     let formattedResponse = '';
@@ -129,7 +137,10 @@ async function submitRequest(input,type) {
       utterance.voice = botVoice;
       speechSynthesis.speak(utterance);
     }
-    responseField.innerHTML += botMsgElement;
+    if(type !== 'a') {
+      responseField.innerHTML += botMsgElement;
+    }
+    
     scrollToBottom();
         
   }
@@ -151,6 +162,8 @@ submitBtn.addEventListener('click', async()=>{
 
 
 async function startRecognition() {
+
+  listeningTextElement.innerHTML = 'listening...';
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
@@ -166,6 +179,7 @@ async function startRecognition() {
   recognition.start();
 
   recognition.onresult = async (event) => {
+    listeningTextElement.innerHTML = '';
     const transcript = event.results[0][0].transcript;
     // const speechRes = await getResponse(transcript)
     // console.log(speechRes);
