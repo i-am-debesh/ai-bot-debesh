@@ -11,7 +11,7 @@ function createQuestion(question) {
 function AwakeCurious() {
   submitRequest('Awake','a');
 }
-//AwakeCurious();
+AwakeCurious();
 inputBox.addEventListener("keydown",(event)=>{
   if(event.key === "Enter" && !event.shiftkey) {
     event.preventDefault();
