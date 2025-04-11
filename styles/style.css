@@ -48,7 +48,8 @@
   
   .response-box{
     background-color: rgba(240, 248, 255, 0);    
-    overflow-y: scroll;
+    overflow-y: auto;
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(62, 52, 83, 0.686) rgba(0, 0, 0, 0);
   }
@@ -83,10 +84,12 @@
     background-color: rgba(75, 201, 75, 0.307);
     justify-self: self-end;
     margin-left: rem;
+    min-width: 3rem;
   }
   .bot-msg {
     background-color: rgba(83, 95, 101, 0.486);    
     justify-self: self-start;
+    min-width: 3.8rem;
   }
   /* LOADER */
   .loader {

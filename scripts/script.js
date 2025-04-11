@@ -9,6 +9,13 @@ function createQuestion(question) {
     return `${apiUrl+question}`;
 }
 
+inputBox.addEventListener("keydown",(event)=>{
+  if(event.key === "Enter" && !event.shiftkey) {
+    event.preventDefault();
+    submitRequest(inputBox.value);
+  }
+})
+
 async function getResponse(question) {
     const url = createQuestion(question);
     try {
@@ -41,10 +48,8 @@ async function removeLoader() {
 
 function scrollToBottom() {
   
-    window.scrollTo({
-      top: responseField.scrollHeight,
-      behavior: 'smooth'
-  });
+  responseField.scrollTop = responseField.scrollHeight;
+  
 }
 
 // function printWordByWord(text, delay, elementId) {
