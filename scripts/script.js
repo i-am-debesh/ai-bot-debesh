@@ -4,14 +4,29 @@ const submitBtn = document.querySelector('.send-btn');
 const micElement = document.querySelector('.mic-btn');
 const headingElement = document.querySelector('.heading')
 const apiUrl = 'https://ai-model-debesh.onrender.com/question=';
+const pingURL = 'https://ai-model-debesh.onrender.com';
 const listeningTextElement = document.querySelector('.listening-text');
 function createQuestion(question) {
     return `${apiUrl+question}`;
 }
-function AwakeCurious() {
-  submitRequest('Awake','a');
+connectToServer();
+async function connectToServer() {
+
+    try {
+    const response = await fetch(pingURL);
+    document.getElementById('overlay').style.display = 'none';   
+    
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    
+    }
+    return 1;
+
+    } catch (error) {
+      return 0;
+    }
 }
-AwakeCurious();
+
 inputBox.addEventListener("keydown",(event)=>{
   if(event.key === "Enter" && !event.shiftkey) {
     event.preventDefault();
@@ -26,7 +41,7 @@ async function getResponse(question) {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-  
+      
       const result = await response.json();
       
       return (result.candidates[0].content.parts[0].text);
